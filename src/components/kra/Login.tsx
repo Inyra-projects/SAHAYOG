@@ -1,0 +1,241 @@
+import { useState } from "react";
+import { Eye, EyeOff, Lock, User } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { useSession } from "./session";
+import { getDefaultRouteForRole, getStoredUser, PRD_USERS, type PRDUser } from "@/lib/auth";
+import { cn } from "@/lib/utils";
+import { ROLE_LABEL } from "@/lib/scoring";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { getProfilePhoto } from "@/lib/profilePhotos";
+import risingUnityStarEmblem from "@/imports/Rising_Unity_Star_Emblem-1.png";
+
+type Mode = "signin" | "create";
+
+function getFirstName(user: PRDUser) {
+  return user.name.replace(/^Dr\.\s*/i, "").split(" ")[0];
+}
+
+function getInitials(user: PRDUser) {
+  return user.name
+    .replace(/^Dr\.\s*/i, "")
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+export function Login() {
+  const { signIn } = useSession();
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<Mode>("signin");
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [phone, setPhone] = useState("");
+  const [pin, setPin] = useState("");
+  const [showPin, setShowPin] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const finish = async () => {
+    if (busy) return;
+    if (!selectedUserId || phone.length !== 10 || pin.length !== 4) {
+      setErr("Select your profile and enter your 4-digit PIN.");
+      return;
+    }
+    setBusy(true);
+    setErr(null);
+    const error = await signIn(phone, pin);
+    setBusy(false);
+    if (error) {
+      setErr("Incorrect PIN. Try again.");
+      setPin("");
+      return;
+    }
+    const user = getStoredUser();
+    const dest = user ? getDefaultRouteForRole(user.role) : "/dashboard";
+    navigate({ to: dest as never }).catch(() => {
+      window.location.href = dest;
+    });
+  };
+
+  const signingIn = mode === "signin";
+  const visibleUsers = PRD_USERS.filter((user) =>
+    signingIn ? user.role === "admin" : user.role !== "admin",
+  );
+  const selectedUser = PRD_USERS.find((user) => user.id === selectedUserId) ?? null;
+
+  const changeMode = (nextMode: Mode) => {
+    setMode(nextMode);
+    setSelectedUserId(null);
+    setPhone("");
+    setPin("");
+    setErr(null);
+  };
+
+  return (
+    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-white px-6 pb-10 pt-14">
+      <img
+        src={risingUnityStarEmblem}
+        alt="Sahayog Pathology"
+        className="mb-0 ml-[155px] mr-[155px] mt-8 block h-[70px] w-fit object-contain"
+      />
+
+      <h1 className="mt-10 text-center text-[32px] font-bold tracking-tight text-slate-950">Welcome back</h1>
+      <p className="mt-2 text-center text-sm text-slate-400">Sign in to manage your center and scorecards</p>
+
+      <div className="mx-auto mt-8 flex w-full max-w-[280px] rounded-full bg-[#F3F4F6] p-1">
+        {(["signin", "create"] as const).map((id) => {
+          const active = mode === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => {
+                changeMode(id);
+              }}
+              className={cn(
+                "flex-1 rounded-full py-2.5 text-sm font-semibold transition-all",
+                active ? "bg-white text-slate-950 shadow-[0_1px_2px_rgba(15,23,42,0.08)]" : "text-slate-400",
+              )}
+            >
+              {id === "signin" ? "Admin" : "Staff"}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-8">
+        <h2 className="text-base font-semibold text-slate-950">Select your profile</h2>
+        <p className="mt-1 text-sm leading-relaxed text-slate-400">
+          Access your dashboard, evaluations, and center tools.
+        </p>
+      </div>
+
+      <div className="mt-5">
+        <span className="text-sm font-medium text-slate-950"></span>
+        <ScrollArea
+          className={cn(
+            "mt-3 w-full",
+            !signingIn &&
+              "[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]",
+          )}
+        >
+          <div className="flex w-max gap-3 pb-3">
+            {visibleUsers.map((user) => {
+              const selected = selectedUserId === user.id;
+              return (
+                <Button
+                  key={user.id}
+                  type="button"
+                  variant="ghost"
+                  aria-pressed={selected}
+                  aria-label={`Select ${user.name}, ${ROLE_LABEL[user.role]}`}
+                  onClick={() => {
+                    setSelectedUserId(user.id);
+                    setPhone(user.phone);
+                    setErr(null);
+                  }}
+                  className="h-auto w-20 flex-col gap-2 rounded-2xl px-2 py-2 hover:bg-slate-100"
+                >
+                  <Avatar
+                    className={cn(
+                      "size-16 border-2 border-white shadow-sm ring-offset-2 transition-all",
+                      selected ? "ring-2 ring-slate-950" : "ring-1 ring-slate-200",
+                    )}
+                  >
+                    <AvatarImage
+                      src={getProfilePhoto(user.id)}
+                      alt=""
+                      className="object-cover"
+                    />
+                    <AvatarFallback className="text-sm font-semibold">
+                      {getInitials(user)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span
+                    className={cn(
+                      "w-full truncate text-xs",
+                      selected ? "font-semibold text-slate-950" : "font-medium text-slate-500",
+                    )}
+                  >
+                    {getFirstName(user)}
+                  </span>
+                </Button>
+              );
+            })}
+          </div>
+          <ScrollBar orientation="horizontal" className={cn(!signingIn && "opacity-0")} />
+        </ScrollArea>
+      </div>
+
+      <form
+        className="mt-5"
+        onSubmit={(e) => {
+          e.preventDefault();
+          void finish();
+        }}
+      >
+        <label className="flex h-14 items-center gap-3 rounded-full bg-[#F5F5F7] px-4">
+          <User className="h-5 w-5 shrink-0 text-slate-400" strokeWidth={1.75} />
+          <input
+            type="text"
+            autoComplete="off"
+            placeholder="Select a profile"
+            aria-label="Selected user"
+            readOnly
+            value={selectedUser ? `${selectedUser.name} · ${ROLE_LABEL[selectedUser.role]}` : ""}
+            className="h-full min-w-0 flex-1 bg-transparent text-base text-slate-950 outline-none placeholder:text-slate-400"
+          />
+        </label>
+
+        <div className="mt-3 flex items-center gap-2">
+          <label className="flex h-14 min-w-0 flex-1 items-center gap-3 rounded-full bg-[#F5F5F7] px-4">
+            <Lock className="h-5 w-5 shrink-0 text-slate-400" strokeWidth={1.75} />
+            <input
+              type={showPin ? "text" : "password"}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={4}
+              autoComplete="off"
+              placeholder="PIN"
+              aria-label="4-digit PIN"
+              value={pin}
+              onChange={(e) => {
+                setPin(e.target.value.replace(/\D/g, "").slice(0, 4));
+                if (err) setErr(null);
+              }}
+              className="h-full min-w-0 flex-1 bg-transparent text-base tracking-[0.2em] text-slate-950 outline-none placeholder:tracking-normal placeholder:text-slate-400"
+            />
+          </label>
+          <button
+            type="button"
+            onClick={() => setShowPin((open) => !open)}
+            className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#F5F5F7] text-slate-500"
+            aria-label={showPin ? "Hide PIN" : "Show PIN"}
+          >
+            {showPin ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+          </button>
+        </div>
+
+        {err && <p className="mt-3 text-center text-xs font-medium text-rose-600">{err}</p>}
+
+        <button
+          type="submit"
+          className="mt-6 flex h-14 w-full items-center justify-center rounded-full bg-black text-base font-semibold text-white transition-all active:scale-[0.98]"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <button
+        type="button"
+        onClick={() => changeMode(signingIn ? "create" : "signin")}
+        className="mt-6 text-center text-sm text-slate-500"
+      >
+        Request a <span className="font-medium text-slate-950 underline underline-offset-4">PIN</span>
+      </button>
+    </div>
+  );
+}
