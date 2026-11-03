@@ -124,12 +124,8 @@ export function Login() {
     if (!selectedUser) return;
 
     const cleanMobile = recoveryMobile.replace(/\D/g, "");
-    const mobileMatches =
-      cleanMobile === selectedUser.phone.replace(/\D/g, "") ||
-      cleanMobile === selectedUser.altPhone?.replace(/\D/g, "");
-
-    if (!mobileMatches) {
-      setPinSheetError("Enter the mobile number registered to this profile.");
+    if (!/^\d{10}$/.test(cleanMobile)) {
+      setPinSheetError("Enter a valid 10-digit mobile number.");
       return;
     }
     if (!/^\d{4}$/.test(otp)) {
