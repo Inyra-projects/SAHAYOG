@@ -83,7 +83,7 @@ function DockNav({
       aria-label="Primary"
       className={cn(
         "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center justify-center gap-1 overflow-hidden rounded-full border border-slate-200/60 bg-slate-100/70 p-1.5 shadow-[0_20px_48px_-12px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.18)] backdrop-blur-3xl backdrop-saturate-150",
-        compact ? "w-[min(76%,19rem)]" : managerNav ? "w-[min(86%,21rem)]" : "w-[min(94%,24rem)]",
+        compact ? "w-[min(76%,19rem)]" : managerNav ? "w-[min(86%,21rem)]" : "w-[min(96%,26rem)]",
       )}
     >
       <div
@@ -114,7 +114,7 @@ function DockNav({
             whileTap={{ scale: 0.92 }}
             transition={pillSpring}
             className={cn(
-              "relative z-10 flex flex-1 cursor-pointer select-none items-center justify-center rounded-full py-4 transition-colors duration-200",
+              "relative z-10 flex min-w-0 flex-1 cursor-pointer select-none items-center justify-center overflow-hidden rounded-full py-4 transition-colors duration-200",
               isActive
                 ? "px-4 text-action-foreground"
                 : "px-3 text-slate-400 hover:bg-slate-100/50 hover:text-slate-700 active:scale-95",
@@ -139,7 +139,7 @@ function DockNav({
               aria-hidden
               animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.96 }}
               transition={labelSpring}
-              className="pointer-events-none relative z-10 whitespace-nowrap pl-1.5 text-xs font-medium tracking-tight text-action-foreground"
+              className="pointer-events-none relative z-10 min-w-0 overflow-hidden whitespace-nowrap pl-1.5 text-xs font-medium tracking-tight text-action-foreground"
             >
               {label}
             </motion.span>
