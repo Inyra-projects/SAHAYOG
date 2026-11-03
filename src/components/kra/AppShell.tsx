@@ -371,7 +371,7 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
 
       <div
         aria-hidden
-        className="pointer-events-none fixed bottom-0 left-1/2 z-40 h-36 w-full max-w-md -translate-x-1/2"
+        className="pointer-events-none fixed bottom-0 left-1/2 z-40 h-16 w-full max-w-md -translate-x-1/2"
       >
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/45 to-transparent backdrop-blur-xl backdrop-saturate-150 [mask-image:linear-gradient(to_top,black_0%,black_52%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_top,black_0%,black_52%,transparent_100%)]" />
       </div>
