@@ -104,6 +104,24 @@ export function authenticateLocal(phone: string, pin: string): { ok: boolean; us
   return { ok: true, user: matched };
 }
 
+export function updateUserPin(userId: string, pin: string): boolean {
+  if (typeof window === "undefined" || !/^\d{4}$/.test(pin)) return false;
+
+  const users = getAllStaffUsers();
+  const userExists = users.some((user) => user.id === userId);
+  if (!userExists) return false;
+
+  try {
+    localStorage.setItem(
+      "sahayog-kra-staff",
+      JSON.stringify(users.map((user) => (user.id === userId ? { ...user, pin } : user))),
+    );
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function logoutLocal(): void {
   if (typeof window === "undefined") return;
   try {

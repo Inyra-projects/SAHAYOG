@@ -1,17 +1,32 @@
 import { useState } from "react";
-import { Eye, EyeOff, Lock, User } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, User } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useSession } from "./session";
-import { getDefaultRouteForRole, getStoredUser, PRD_USERS, type PRDUser } from "@/lib/auth";
+import {
+  getDefaultRouteForRole,
+  getStoredUser,
+  PRD_USERS,
+  updateUserPin,
+  type PRDUser,
+} from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { ROLE_LABEL } from "@/lib/scoring";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { getProfilePhoto } from "@/lib/profilePhotos";
 import risingUnityStarEmblem from "@/imports/Rising_Unity_Star_Emblem-1.png";
 
 type Mode = "signin" | "create";
+type PinSheetStep = "verify" | "verifying" | "reset";
 
 function getFirstName(user: PRDUser) {
   return user.name.replace(/^Dr\.\s*/i, "").split(" ")[0];
@@ -37,6 +52,13 @@ export function Login() {
   const [showPin, setShowPin] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [pinSheetOpen, setPinSheetOpen] = useState(false);
+  const [pinSheetStep, setPinSheetStep] = useState<PinSheetStep>("verify");
+  const [recoveryMobile, setRecoveryMobile] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPin, setNewPin] = useState("");
+  const [confirmPin, setConfirmPin] = useState("");
+  const [pinSheetError, setPinSheetError] = useState<string | null>(null);
 
   const finish = async () => {
     if (busy) return;
@@ -72,6 +94,73 @@ export function Login() {
     setPhone("");
     setPin("");
     setErr(null);
+  };
+
+  const resetPinSheet = () => {
+    setPinSheetStep("verify");
+    setRecoveryMobile("");
+    setOtp("");
+    setNewPin("");
+    setConfirmPin("");
+    setPinSheetError(null);
+  };
+
+  const handlePinSheetOpenChange = (open: boolean) => {
+    if (!open && pinSheetStep === "verifying") return;
+    setPinSheetOpen(open);
+    if (!open) resetPinSheet();
+  };
+
+  const openPinSheet = () => {
+    if (!selectedUser) {
+      setErr("Select your profile before requesting a PIN.");
+      return;
+    }
+    resetPinSheet();
+    setPinSheetOpen(true);
+  };
+
+  const verifyRecoveryDetails = async () => {
+    if (!selectedUser) return;
+
+    const cleanMobile = recoveryMobile.replace(/\D/g, "");
+    const mobileMatches =
+      cleanMobile === selectedUser.phone.replace(/\D/g, "") ||
+      cleanMobile === selectedUser.altPhone?.replace(/\D/g, "");
+
+    if (!mobileMatches) {
+      setPinSheetError("Enter the mobile number registered to this profile.");
+      return;
+    }
+    if (!/^\d{4}$/.test(otp)) {
+      setPinSheetError("Enter the 4-digit OTP.");
+      return;
+    }
+
+    setPinSheetError(null);
+    setPinSheetStep("verifying");
+    await new Promise((resolve) => window.setTimeout(resolve, 900));
+    setPinSheetStep("reset");
+  };
+
+  const saveNewPin = () => {
+    if (!selectedUser) return;
+    if (!/^\d{4}$/.test(newPin)) {
+      setPinSheetError("Your new PIN must contain 4 digits.");
+      return;
+    }
+    if (newPin !== confirmPin) {
+      setPinSheetError("The PINs do not match.");
+      return;
+    }
+    if (!updateUserPin(selectedUser.id, newPin)) {
+      setPinSheetError("Unable to update the PIN. Please try again.");
+      return;
+    }
+
+    setPin("");
+    setPinSheetOpen(false);
+    resetPinSheet();
   };
 
   return (
@@ -229,13 +318,139 @@ export function Login() {
         </button>
       </form>
 
-      <button
+      <Button
         type="button"
-        onClick={() => changeMode(signingIn ? "create" : "signin")}
-        className="mt-6 text-center text-sm text-slate-500"
+        variant="ghost"
+        onClick={openPinSheet}
+        className="mt-6 h-auto text-center text-sm font-normal text-slate-500"
       >
         Request a <span className="font-medium text-slate-950 underline underline-offset-4">PIN</span>
-      </button>
+      </Button>
+
+      <Sheet open={pinSheetOpen} onOpenChange={handlePinSheetOpenChange}>
+        <SheetContent
+          side="bottom"
+          hideClose
+          className="mx-auto max-w-md rounded-t-3xl border-slate-200 bg-white px-6 pb-8 pt-3"
+        >
+          <div className="mx-auto mb-5 h-1 w-12 rounded-full bg-slate-300" />
+
+          {pinSheetStep === "verifying" ? (
+            <div className="flex min-h-72 flex-col items-center justify-center text-center">
+              <div className="grid size-14 place-items-center rounded-full bg-slate-100">
+                <Loader2 className="size-6 animate-spin text-slate-950" />
+              </div>
+              <span className="mt-5 text-base font-semibold text-slate-950">
+                Verifying your details
+              </span>
+              <span className="mt-2 text-sm text-slate-500">
+                Please wait while we confirm your account.
+              </span>
+            </div>
+          ) : (
+            <>
+              <SheetHeader className="text-left">
+                <SheetTitle>
+                  {pinSheetStep === "verify" ? "Request a new PIN" : "Create your new PIN"}
+                </SheetTitle>
+                <SheetDescription>
+                  {pinSheetStep === "verify"
+                    ? `Verify the mobile number for ${selectedUser?.name ?? "this profile"} to continue.`
+                    : "Choose a memorable 4-digit PIN for this profile."}
+                </SheetDescription>
+              </SheetHeader>
+
+              {pinSheetStep === "verify" ? (
+                <div className="mt-6 space-y-3">
+                  <Input
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel"
+                    maxLength={10}
+                    aria-label="Registered mobile number"
+                    placeholder="Verify mobile number"
+                    value={recoveryMobile}
+                    onChange={(event) => {
+                      setRecoveryMobile(event.target.value.replace(/\D/g, "").slice(0, 10));
+                      setPinSheetError(null);
+                    }}
+                    className="h-14 rounded-full border-0 bg-slate-100 px-5 shadow-none"
+                  />
+                  <Input
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    maxLength={4}
+                    aria-label="Four-digit OTP"
+                    placeholder="Enter OTP (4 digits)"
+                    value={otp}
+                    onChange={(event) => {
+                      setOtp(event.target.value.replace(/\D/g, "").slice(0, 4));
+                      setPinSheetError(null);
+                    }}
+                    className="h-14 rounded-full border-0 bg-slate-100 px-5 tracking-widest shadow-none"
+                  />
+                  {pinSheetError && (
+                    <span className="block text-center text-xs font-medium text-rose-600">
+                      {pinSheetError}
+                    </span>
+                  )}
+                  <Button
+                    type="button"
+                    onClick={() => void verifyRecoveryDetails()}
+                    className="mt-3 h-14 w-full text-base font-semibold"
+                  >
+                    Verify
+                  </Button>
+                </div>
+              ) : (
+                <div className="mt-6 space-y-3">
+                  <Input
+                    type="password"
+                    inputMode="numeric"
+                    autoComplete="new-password"
+                    maxLength={4}
+                    aria-label="New four-digit PIN"
+                    placeholder="Enter new PIN (4 digits)"
+                    value={newPin}
+                    onChange={(event) => {
+                      setNewPin(event.target.value.replace(/\D/g, "").slice(0, 4));
+                      setPinSheetError(null);
+                    }}
+                    className="h-14 rounded-full border-0 bg-slate-100 px-5 tracking-widest shadow-none"
+                  />
+                  <Input
+                    type="password"
+                    inputMode="numeric"
+                    autoComplete="new-password"
+                    maxLength={4}
+                    aria-label="Confirm new four-digit PIN"
+                    placeholder="Confirm PIN (4 digits)"
+                    value={confirmPin}
+                    onChange={(event) => {
+                      setConfirmPin(event.target.value.replace(/\D/g, "").slice(0, 4));
+                      setPinSheetError(null);
+                    }}
+                    className="h-14 rounded-full border-0 bg-slate-100 px-5 tracking-widest shadow-none"
+                  />
+                  {pinSheetError && (
+                    <span className="block text-center text-xs font-medium text-rose-600">
+                      {pinSheetError}
+                    </span>
+                  )}
+                  <Button
+                    type="button"
+                    onClick={saveNewPin}
+                    className="mt-3 h-14 w-full text-base font-semibold"
+                  >
+                    Set a PIN
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
