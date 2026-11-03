@@ -64,12 +64,28 @@ function DockNav({
     <nav
       aria-label="Primary"
       className={cn(
-        "fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center rounded-full border border-white/90 bg-white/85 p-2 shadow-[0_16px_36px_-8px_rgba(15,23,42,0.12)] backdrop-blur-2xl",
+        "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/80 bg-white/55 p-2 shadow-[0_20px_48px_-14px_rgba(15,23,42,0.28),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(148,163,184,0.18)] backdrop-blur-3xl backdrop-saturate-150",
         compact
           ? "w-3/4 max-w-xs justify-center gap-1"
           : "w-[min(92%,24rem)] justify-between",
       )}
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-gradient-to-br from-white/85 via-white/35 to-slate-200/20"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-8 -top-10 -z-10 h-24 w-36 rounded-full bg-white/80 blur-2xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-12 right-2 -z-10 h-24 w-32 rounded-full bg-sky-100/45 blur-2xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-px -z-10 rounded-[inherit] ring-1 ring-inset ring-white/70"
+      />
       {tabs.map(({ id, label, Icon }) => {
         const isActive = active === id;
         return (
@@ -92,7 +108,7 @@ function DockNav({
                 layoutId="activeNavIndicator"
                 aria-hidden
                 transition={pillSpring}
-                className="absolute inset-0 -z-10 rounded-full bg-slate-950 shadow-md"
+                className="absolute inset-0 -z-10 rounded-full bg-slate-950/90 shadow-[0_8px_20px_-8px_rgba(15,23,42,0.75),inset_0_1px_0_rgba(255,255,255,0.14)] ring-1 ring-white/10 backdrop-blur-xl"
               />
             )}
             <motion.span
