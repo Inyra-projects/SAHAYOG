@@ -76,13 +76,18 @@ function DockNav({
     ? { duration: 0 }
     : { type: "spring" as const, stiffness: 400, damping: 32 };
   const compact = tabs.length === 2;
+  const managerNav = tabs.length === 3;
 
   return (
     <nav
       aria-label="Primary"
       className={cn(
         "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-slate-200/60 bg-slate-100/70 p-1.5 shadow-[0_20px_48px_-12px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.18)] backdrop-blur-3xl backdrop-saturate-150",
-        compact ? "w-3/4 max-w-xs justify-center gap-1" : "w-[min(92%,24rem)] justify-between",
+        compact
+          ? "w-3/4 max-w-xs justify-center gap-1"
+          : managerNav
+            ? "w-[min(86%,21rem)] justify-center gap-1"
+            : "w-[min(92%,24rem)] justify-between",
       )}
     >
       <div
@@ -114,7 +119,7 @@ function DockNav({
             transition={pillSpring}
             className={cn(
               "relative z-10 flex cursor-pointer select-none items-center justify-center rounded-full py-4 transition-colors duration-200",
-              compact && "flex-1",
+              (compact || managerNav) && "flex-1",
               isActive
                 ? "px-4 text-action-foreground"
                 : "px-3 text-slate-400 hover:bg-slate-100/50 hover:text-slate-700 active:scale-95",
