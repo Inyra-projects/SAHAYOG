@@ -168,11 +168,9 @@ export function Login() {
       />
 
       <h1 className="mt-10 text-center text-[32px] font-bold tracking-tight text-slate-950">
-        Welcome back
+        SAHAYOG
       </h1>
-      <p className="mt-2 text-center text-sm text-slate-400">
-        Sign in to manage your center and scorecards
-      </p>
+      <p className="mt-2 text-center text-sm text-slate-400">Welcome Back</p>
 
       <div className="mx-auto mt-8 flex w-full max-w-[280px] rounded-full bg-[#F3F4F6] p-1">
         {(["signin", "create"] as const).map((id) => {
