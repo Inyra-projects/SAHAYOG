@@ -58,11 +58,17 @@ function DockNav({
   const labelSpring = reduceMotion
     ? { duration: 0 }
     : { type: "spring" as const, stiffness: 400, damping: 32 };
+  const compact = tabs.length === 2;
 
   return (
     <nav
       aria-label="Primary"
-      className="fixed bottom-6 left-1/2 z-50 flex w-[min(92%,24rem)] -translate-x-1/2 items-center justify-between rounded-full border border-white/90 bg-white/85 p-1.5 shadow-[0_16px_36px_-8px_rgba(15,23,42,0.12)] backdrop-blur-2xl"
+      className={cn(
+        "fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center rounded-full border border-white/90 bg-white/85 p-2 shadow-[0_16px_36px_-8px_rgba(15,23,42,0.12)] backdrop-blur-2xl",
+        compact
+          ? "w-3/4 max-w-xs justify-center gap-1"
+          : "w-[min(92%,24rem)] justify-between",
+      )}
     >
       {tabs.map(({ id, label, Icon }) => {
         const isActive = active === id;
@@ -76,7 +82,8 @@ function DockNav({
             whileTap={{ scale: 0.92 }}
             transition={pillSpring}
             className={cn(
-              "relative z-10 flex cursor-pointer select-none items-center justify-center rounded-full py-2.5 transition-colors duration-200",
+              "relative z-10 flex cursor-pointer select-none items-center justify-center rounded-full py-3 transition-colors duration-200",
+              compact && "flex-1",
               isActive ? "px-4 text-white" : "px-3 text-slate-400 hover:bg-slate-100/50 hover:text-slate-700 active:scale-95",
             )}
           >
