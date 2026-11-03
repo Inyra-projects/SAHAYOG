@@ -64,7 +64,7 @@ function DockNav({
     <nav
       aria-label="Primary"
       className={cn(
-        "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-slate-300/80 bg-slate-100/70 p-2 shadow-[0_20px_48px_-12px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.24)] ring-1 ring-slate-900/5 backdrop-blur-3xl backdrop-saturate-150",
+        "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-slate-200/60 bg-slate-100/70 p-2 shadow-[0_20px_48px_-12px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.18)] backdrop-blur-3xl backdrop-saturate-150",
         compact
           ? "w-3/4 max-w-xs justify-center gap-1"
           : "w-[min(92%,24rem)] justify-between",
