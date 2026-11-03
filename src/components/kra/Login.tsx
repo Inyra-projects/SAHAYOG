@@ -209,7 +209,7 @@ export function Login() {
 
       <div className="mt-5">
         <span className="text-sm font-medium text-slate-950"></span>
-        <ScrollArea className="mt-3 w-full">
+        <ScrollArea className="-mx-6 mt-3 w-[calc(100%+3rem)]">
           <div className="flex w-max gap-3 pb-3">
             {visibleUsers.map((user) => {
               const selected = selectedUserId === user.id;
