@@ -200,12 +200,8 @@ export function Dashboard({
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 350, damping: 26 }}
-        className="relative overflow-hidden rounded-[32px] border border-white/80 bg-white/90 p-5 text-foreground shadow-[0_12px_36px_-6px_rgba(20,30,50,0.06),0_2px_8px_rgba(20,30,50,0.03)] ring-1 ring-black/[0.03] backdrop-blur-md sm:p-6"
+        className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/55 p-5 text-foreground shadow-[0_18px_48px_-18px_rgba(15,23,42,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] ring-1 ring-black/[0.04] backdrop-blur-2xl backdrop-saturate-150 sm:p-6"
       >
-        <div className="pointer-events-none absolute -right-16 -top-20 size-56 rounded-full bg-[#e4def6]/80 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-16 size-56 rounded-full bg-[#dce8f6]/80 blur-3xl" />
-        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
-
         {/* 1. TOP BAR (Uncontained Center Name with 5s Pulsating Green Dot + Date Picker Trigger Button) */}
         <div className="flex items-center justify-between relative z-10">
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 select-none sm:text-sm">
