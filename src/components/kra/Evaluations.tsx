@@ -304,7 +304,7 @@ export function Evaluations({
               <button
                 type="button"
                 onClick={onSwitchToRate}
-                className="inline-flex h-11 shrink-0 items-center rounded-full bg-action px-4 text-xs font-semibold text-action-foreground shadow-[0_8px_24px_rgb(0,0,0,0.12)] transition-all duration-200 ease-out active:scale-95"
+                className="primary-action inline-flex h-11 shrink-0 items-center rounded-full px-4 text-xs font-semibold shadow-[0_8px_24px_rgb(0,0,0,0.12)] transition-all duration-200 ease-out active:scale-95"
               >
                 Rate Peers →
               </button>
@@ -585,7 +585,7 @@ export function Evaluations({
               <button
                 type="button"
                 onClick={() => setFilterOpen(false)}
-                className="w-full rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] flex items-center justify-center gap-2"
+                className="primary-action flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98]"
               >
                 Show {filteredStaff.length} {filteredStaff.length === 1 ? "Staff Evaluation" : "Staff Evaluations"}
               </button>
@@ -1153,7 +1153,7 @@ function EvaluationCard({
                   type="button"
                   disabled={saving}
                   onClick={handleAdminApproveAndFinalize}
-                  className="flex h-auto w-full items-center justify-center rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50"
+                  className="primary-action flex h-auto w-full items-center justify-center rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98] disabled:opacity-50"
                 >
                   Approve & Finalize
                 </button>
@@ -1222,7 +1222,7 @@ function EvaluationCard({
                   type="button"
                   disabled={saving}
                   onClick={handleSubmitEvaluationByManager}
-                  className="flex h-auto w-full items-center justify-center rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50"
+                  className="primary-action flex h-auto w-full items-center justify-center rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98] disabled:opacity-50"
                 >
                   Submit Evaluation
                 </button>
@@ -1243,7 +1243,7 @@ function EvaluationCard({
                   type="button"
                   disabled={saving}
                   onClick={handleMarkReviewed}
-                  className="flex h-auto w-full items-center justify-center rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50"
+                  className="primary-action flex h-auto w-full items-center justify-center rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98] disabled:opacity-50"
                 >
                   Submit Evaluation
                 </button>
@@ -1307,7 +1307,7 @@ function EvaluationCard({
                   type="button"
                   disabled={saving}
                   onClick={handleSubmitForReview}
-                  className="flex h-auto w-full items-center justify-center rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50"
+                  className="primary-action flex h-auto w-full items-center justify-center rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98] disabled:opacity-50"
                 >
                   Submit for Review
                 </button>

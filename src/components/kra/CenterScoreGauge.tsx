@@ -13,7 +13,8 @@ const STROKE = 22;
 const DOTS = Array.from({ length: 18 }, (_, i) => 0.045 + i * (0.91 / 17));
 
 export function CenterScoreGauge({ score }: CenterScoreGaugeProps) {
-  const value = score === null || score === undefined ? null : Math.max(0, Math.min(100, Math.round(score)));
+  const value =
+    score === null || score === undefined ? null : Math.max(0, Math.min(100, Math.round(score)));
   const shown = value ?? 0;
   const [drawn, setDrawn] = useState(0);
 
@@ -65,18 +66,12 @@ export function CenterScoreGauge({ score }: CenterScoreGaugeProps) {
   return (
     <div className="relative mx-auto w-full max-w-[340px]">
       <svg viewBox="0 0 360 196" className="h-auto w-full overflow-visible" aria-hidden="true">
-        <path
-          d={arc}
-          fill="none"
-          stroke="#e4e6eb"
-          strokeWidth={STROKE}
-          strokeLinecap="round"
-        />
+        <path d={arc} fill="none" stroke="#e4e6eb" strokeWidth={STROKE} strokeLinecap="round" />
         {drawnClamped > 0 && (
           <path
             d={arc}
             fill="none"
-            stroke="var(--action)"
+            stroke="var(--score-accent)"
             strokeWidth={STROKE}
             strokeLinecap="round"
             pathLength={100}

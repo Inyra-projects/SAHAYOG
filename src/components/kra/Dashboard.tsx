@@ -422,7 +422,7 @@ export function Dashboard({
                     setMonth(tempMonth);
                     setMonthPickerOpen(false);
                   }}
-                  className="w-full max-w-[200px] cursor-pointer rounded-full bg-action py-3 text-center font-display text-sm font-semibold text-action-foreground shadow-[0_8px_24px_rgb(0,0,0,0.16)] transition-all duration-200 ease-out hover:bg-action/90 active:scale-95"
+                  className="primary-action w-full max-w-[200px] cursor-pointer rounded-full py-3 text-center font-display text-sm font-semibold shadow-[0_8px_24px_rgb(0,0,0,0.16)] transition-all duration-200 ease-out active:scale-95"
                 >
                   Done
                 </button>

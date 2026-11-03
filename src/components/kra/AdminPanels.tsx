@@ -130,7 +130,7 @@ export function ManageTeam({ data }: { data: Bootstrap }) {
           <button
             type="button"
             onClick={() => setEdit({ role: "phlebo", center: "Nanded City", active: true })}
-            className="flex h-11 shrink-0 items-center gap-1.5 rounded-full bg-action px-4 text-xs font-semibold text-action-foreground shadow-[0_8px_24px_rgb(0,0,0,0.12)] transition-all duration-200 ease-out active:scale-95"
+            className="primary-action flex h-11 shrink-0 items-center gap-1.5 rounded-full px-4 text-xs font-semibold shadow-[0_8px_24px_rgb(0,0,0,0.12)] transition-all duration-200 ease-out active:scale-95"
           >
             <Plus className="h-4 w-4" /> Add staff
           </button>
@@ -326,7 +326,7 @@ export function ManageTeam({ data }: { data: Bootstrap }) {
               <button
                 type="button"
                 onClick={() => setFilterOpen(false)}
-                className="w-full rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] flex items-center justify-center gap-2"
+                className="primary-action flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98]"
               >
                 Show {filteredStaff.length} {filteredStaff.length === 1 ? "Employee" : "Employees"}
               </button>
@@ -489,7 +489,7 @@ function StaffDialog({
             type="button"
             onClick={save}
             disabled={busy || !f.name}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50 active:scale-98 transition-all mt-4"
+            className="primary-action mt-4 flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98] disabled:opacity-50 active:scale-98"
           >
             {busy && <Loader2 className="h-4 w-4 animate-spin" />}
             Save Staff Profile
@@ -774,7 +774,7 @@ function KraDialog({
                 type="button"
                 onClick={save}
                 disabled={busy}
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50 active:scale-98 transition-all"
+                className="primary-action flex flex-1 items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-medium shadow-sm transition-all active:scale-[0.98] disabled:opacity-50 active:scale-98"
               >
                 {busy && <Loader2 className="h-4 w-4 animate-spin" />}
                 Save KPI

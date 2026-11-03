@@ -121,7 +121,7 @@ function DockNav({
               "relative z-10 flex cursor-pointer select-none items-center justify-center rounded-full py-4 transition-colors duration-200",
               (compact || managerNav) && "flex-1",
               isActive
-                ? "px-4 text-action-foreground"
+                ? "px-4 text-action"
                 : "px-3 text-slate-400 hover:bg-slate-100/50 hover:text-slate-700 active:scale-95",
             )}
           >
@@ -130,12 +130,12 @@ function DockNav({
                 layoutId="activeNavIndicator"
                 aria-hidden
                 transition={pillSpring}
-                className="absolute inset-0 -z-10 rounded-full bg-action shadow-[0_8px_20px_-8px_rgba(15,23,42,0.4),inset_0_1px_0_rgba(255,255,255,0.45)] ring-1 ring-white/30 backdrop-blur-xl"
+                className="primary-action absolute inset-0 -z-10 rounded-full shadow-[0_8px_20px_-8px_rgba(15,23,42,0.4),inset_0_1px_0_rgba(255,255,255,0.45)] ring-1 ring-white/30 backdrop-blur-xl"
               />
             )}
             <motion.span
               className="relative z-10 flex shrink-0"
-              animate={{ color: isActive ? "var(--action-foreground)" : "#94a3b8" }}
+              animate={{ color: isActive ? "var(--action)" : "#94a3b8" }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
             >
               <Icon className="size-4" strokeWidth={isActive ? 2.25 : 1.75} />
@@ -147,7 +147,7 @@ function DockNav({
                   animate={{ opacity: 1, width: "auto", scale: 1 }}
                   exit={{ opacity: 0, width: 0, scale: 0.9 }}
                   transition={labelSpring}
-                  className="relative z-10 overflow-hidden whitespace-nowrap pl-1.5 text-xs font-medium tracking-tight text-action-foreground"
+                  className="relative z-10 overflow-hidden whitespace-nowrap pl-1.5 text-xs font-medium tracking-tight text-action"
                 >
                   {label}
                 </motion.span>
@@ -223,7 +223,7 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
                 window.location.href = "/login";
               });
             }}
-            className="mt-4 rounded-xl bg-action px-4 py-2 text-sm font-semibold text-action-foreground"
+            className="primary-action mt-4 rounded-xl px-4 py-2 text-sm font-semibold"
           >
             Go to sign in
           </button>
