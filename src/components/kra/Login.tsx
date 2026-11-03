@@ -212,10 +212,11 @@ export function Login() {
         <ScrollArea
           className={cn(
             "mt-3 w-full",
-            !signingIn && "[mask-image:linear-gradient(to_right,black,black_92%,transparent)]",
+            !signingIn &&
+              "[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]",
           )}
         >
-          <div className="flex w-max gap-3 pb-3">
+          <div className={cn("flex w-max gap-3 pb-3", !signingIn && "px-7")}>
             {visibleUsers.map((user) => {
               const selected = selectedUserId === user.id;
               return (
