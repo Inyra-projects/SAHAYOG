@@ -318,7 +318,7 @@ export function Login() {
         type="button"
         variant="ghost"
         onClick={openPinSheet}
-        className="mt-6 h-auto text-center text-sm font-normal text-slate-500"
+        className="mt-6 h-auto text-center text-sm font-normal text-slate-500 hover:bg-transparent hover:text-slate-500"
       >
         Request a <span className="font-medium text-slate-950 underline underline-offset-4">PIN</span>
       </Button>
