@@ -305,22 +305,22 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
   return (
     <div className="app-canvas relative mx-auto min-h-screen max-w-md pb-36">
       {/* Sticky Glassmorphic Header with profile and logout */}
-      <header className="sticky top-0 z-30 isolate overflow-hidden border-b border-slate-200/60 bg-slate-100/70 px-4 py-3 shadow-[0_12px_32px_-20px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.18)] backdrop-blur-3xl backdrop-saturate-150">
+      <header className="sticky top-3 z-30 isolate mx-3 mt-3 overflow-hidden rounded-[28px] border border-white/75 bg-white/45 px-4 py-3 shadow-[0_18px_44px_-20px_rgba(15,23,42,0.3),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.16)] ring-1 ring-black/[0.04] backdrop-blur-3xl backdrop-saturate-150">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white/90 via-slate-100/55 to-slate-200/45"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white/65 via-white/30 to-slate-200/20"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-8 -top-10 -z-10 h-24 w-36 rounded-full bg-white/80 blur-2xl"
+          className="pointer-events-none absolute -left-8 -top-10 -z-10 h-24 w-36 rounded-full bg-white/70 blur-2xl"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -bottom-12 right-2 -z-10 h-24 w-32 rounded-full bg-sky-100/45 blur-2xl"
+          className="pointer-events-none absolute -bottom-12 right-2 -z-10 h-24 w-32 rounded-full bg-action/10 blur-2xl"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-px -z-10 ring-1 ring-inset ring-white/70"
+          className="pointer-events-none absolute inset-px -z-10 rounded-[27px] ring-1 ring-inset ring-white/65"
         />
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
@@ -360,11 +360,19 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
             <button
               type="button"
               onClick={handleSignOut}
-              className="grid size-11 place-items-center rounded-full border border-white/70 bg-white text-rose-600 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-200 ease-out hover:bg-rose-50 active:scale-95 cursor-pointer"
+              className="relative isolate grid size-11 cursor-pointer place-items-center overflow-hidden rounded-full border border-white/80 bg-white/35 text-rose-600 shadow-[0_10px_28px_-12px_rgba(15,23,42,0.28),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.14)] ring-1 ring-black/[0.04] backdrop-blur-2xl backdrop-saturate-150 transition-all duration-200 ease-out hover:bg-white/55 active:scale-95"
               aria-label="Sign out"
               title="Sign out"
             >
-              <LogOut className="h-4 w-4 text-rose-600" />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white/70 via-white/25 to-slate-200/15"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -left-3 -top-4 -z-10 size-9 rounded-full bg-white/80 blur-xl"
+              />
+              <LogOut className="relative z-10 h-4 w-4 text-rose-600" />
             </button>
           </div>
         </div>
