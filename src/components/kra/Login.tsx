@@ -28,6 +28,8 @@ import risingUnityStarEmblem from "@/imports/Rising_Unity_Star_Emblem-1.png";
 type Mode = "signin" | "create";
 type PinSheetStep = "verify" | "verifying" | "reset";
 
+const defaultAdmin = PRD_USERS.find((user) => user.role === "admin") ?? null;
+
 function getFirstName(user: PRDUser) {
   return user.name.replace(/^Dr\.\s*/i, "").split(" ")[0];
 }
@@ -46,8 +48,8 @@ export function Login() {
   const { signIn } = useSession();
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("signin");
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [phone, setPhone] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(defaultAdmin?.id ?? null);
+  const [phone, setPhone] = useState(defaultAdmin?.phone ?? "");
   const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -90,8 +92,8 @@ export function Login() {
 
   const changeMode = (nextMode: Mode) => {
     setMode(nextMode);
-    setSelectedUserId(null);
-    setPhone("");
+    setSelectedUserId(nextMode === "signin" ? (defaultAdmin?.id ?? null) : null);
+    setPhone(nextMode === "signin" ? (defaultAdmin?.phone ?? "") : "");
     setPin("");
     setErr(null);
   };
