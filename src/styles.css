@@ -158,12 +158,17 @@
     line-height: 1.5;
     -webkit-tap-highlight-color: transparent;
   }
-  h1, h2, h3, .font-display {
+  h1,
+  h2,
+  h3,
+  .font-display {
     font-family: var(--font-display);
     letter-spacing: -0.03em;
     line-height: 1.15;
   }
-  button, a, [role="button"] {
+  button,
+  a,
+  [role="button"] {
     transition-property: color, background-color, border-color, box-shadow, transform, opacity;
     transition-duration: 200ms;
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -194,9 +199,41 @@
   font-variant-numeric: tabular-nums;
 }
 
+.login-canvas {
+  background-color: var(--surface);
+  background-image:
+    radial-gradient(
+      ellipse 78% 44% at 106% 8%,
+      color-mix(in oklch, var(--action) 42%, transparent) 0%,
+      color-mix(in oklch, var(--action) 16%, transparent) 48%,
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 62% 38% at 18% 29%,
+      color-mix(in oklch, var(--primary) 12%, transparent) 0%,
+      color-mix(in oklch, var(--primary) 5%, transparent) 52%,
+      transparent 82%
+    ),
+    radial-gradient(
+      ellipse 84% 36% at 50% 104%,
+      color-mix(in oklch, var(--action) 14%, transparent) 0%,
+      transparent 72%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in oklch, var(--surface) 92%, var(--secondary)) 0%,
+      var(--surface) 48%,
+      color-mix(in oklch, var(--surface) 94%, var(--action)) 100%
+    );
+  background-attachment: fixed;
+}
+
 /* Antigravity Spatial & Motion Design Tokens */
 @utility antigravity-float {
-  transition: transform 200ms ease-out, box-shadow 200ms ease-out, border-color 200ms ease-out;
+  transition:
+    transform 200ms ease-out,
+    box-shadow 200ms ease-out,
+    border-color 200ms ease-out;
 }
 
 @utility antigravity-glass {
@@ -213,11 +250,22 @@
 }
 
 @keyframes kiosk-shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-7px); }
-  40% { transform: translateX(7px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(7px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 .animate-shake {
@@ -225,7 +273,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

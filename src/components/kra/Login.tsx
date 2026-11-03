@@ -160,15 +160,19 @@ export function Login() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-white px-6 pb-10 pt-14">
+    <div className="login-canvas mx-auto flex min-h-screen max-w-md flex-col px-6 pb-10 pt-14">
       <img
         src={risingUnityStarEmblem}
         alt="Sahayog Pathology"
         className="mb-0 ml-[155px] mr-[155px] mt-8 block h-[70px] w-fit object-contain"
       />
 
-      <h1 className="mt-10 text-center text-[32px] font-bold tracking-tight text-slate-950">Welcome back</h1>
-      <p className="mt-2 text-center text-sm text-slate-400">Sign in to manage your center and scorecards</p>
+      <h1 className="mt-10 text-center text-[32px] font-bold tracking-tight text-slate-950">
+        Welcome back
+      </h1>
+      <p className="mt-2 text-center text-sm text-slate-400">
+        Sign in to manage your center and scorecards
+      </p>
 
       <div className="mx-auto mt-8 flex w-full max-w-[280px] rounded-full bg-[#F3F4F6] p-1">
         {(["signin", "create"] as const).map((id) => {
@@ -182,7 +186,9 @@ export function Login() {
               }}
               className={cn(
                 "flex-1 rounded-full py-2.5 text-sm font-semibold transition-all",
-                active ? "bg-white text-slate-950 shadow-[0_1px_2px_rgba(15,23,42,0.08)]" : "text-slate-400",
+                active
+                  ? "bg-white text-slate-950 shadow-[0_1px_2px_rgba(15,23,42,0.08)]"
+                  : "text-slate-400",
               )}
             >
               {id === "signin" ? "Admin" : "Staff"}
@@ -230,11 +236,7 @@ export function Login() {
                       selected ? "ring-2 ring-slate-950" : "ring-1 ring-slate-200",
                     )}
                   >
-                    <AvatarImage
-                      src={getProfilePhoto(user.id)}
-                      alt=""
-                      className="object-cover"
-                    />
+                    <AvatarImage src={getProfilePhoto(user.id)} alt="" className="object-cover" />
                     <AvatarFallback className="text-sm font-semibold">
                       {getInitials(user)}
                     </AvatarFallback>
@@ -320,7 +322,8 @@ export function Login() {
         onClick={openPinSheet}
         className="mt-6 h-auto text-center text-sm font-normal text-slate-500 hover:bg-transparent hover:text-slate-500"
       >
-        Request a <span className="font-medium text-slate-950 underline underline-offset-4">PIN</span>
+        Request a{" "}
+        <span className="font-medium text-slate-950 underline underline-offset-4">PIN</span>
       </Button>
 
       <Sheet open={pinSheetOpen} onOpenChange={handlePinSheetOpenChange}>
