@@ -305,7 +305,7 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
   return (
     <div className="app-canvas relative mx-auto min-h-screen max-w-md pb-36">
       {/* Sticky Glassmorphic Header with profile and logout */}
-      <header className="sticky top-3 z-30 isolate mx-3 mt-3 overflow-hidden rounded-[28px] border border-white/75 bg-white/45 px-4 py-3 shadow-[0_18px_44px_-20px_rgba(15,23,42,0.3),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.16)] ring-1 ring-black/[0.04] backdrop-blur-3xl backdrop-saturate-150">
+      <header className="sticky top-0 z-30 isolate overflow-hidden border-b border-white/75 bg-white/45 px-4 py-3 shadow-[0_18px_44px_-20px_rgba(15,23,42,0.3),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.16)] backdrop-blur-3xl backdrop-saturate-150">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white/65 via-white/30 to-slate-200/20"
@@ -320,7 +320,7 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-px -z-10 rounded-[27px] ring-1 ring-inset ring-white/65"
+          className="pointer-events-none absolute inset-px -z-10 ring-1 ring-inset ring-white/65"
         />
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
