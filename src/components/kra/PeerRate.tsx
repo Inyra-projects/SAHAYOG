@@ -112,7 +112,7 @@ export function PeerRate({ data }: { data: Bootstrap }) {
                   type="button"
                   onClick={submit}
                   disabled={busy}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-action px-6 py-3.5 text-sm font-medium text-action-foreground shadow-sm transition-all hover:bg-action/90 active:scale-[0.98] disabled:opacity-50"
                 >
                   {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} Send rating
                 </motion.button>

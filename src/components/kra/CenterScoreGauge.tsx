@@ -76,7 +76,7 @@ export function CenterScoreGauge({ score }: CenterScoreGaugeProps) {
           <path
             d={arc}
             fill="none"
-            stroke="#98f000"
+            stroke="var(--action)"
             strokeWidth={STROKE}
             strokeLinecap="round"
             pathLength={100}

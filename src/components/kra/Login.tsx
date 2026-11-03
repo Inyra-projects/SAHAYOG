@@ -308,7 +308,7 @@ export function Login() {
 
         <button
           type="submit"
-          className="mt-6 flex h-14 w-full items-center justify-center rounded-full bg-black text-base font-semibold text-white transition-all active:scale-[0.98]"
+          className="mt-6 flex h-14 w-full items-center justify-center rounded-full bg-action text-base font-semibold text-action-foreground transition-all hover:bg-action/90 active:scale-[0.98]"
         >
           Sign In
         </button>
