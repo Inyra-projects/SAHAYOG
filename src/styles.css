@@ -228,6 +228,28 @@
   background-attachment: fixed;
 }
 
+.login-wordmark {
+  position: relative;
+  isolation: isolate;
+}
+
+.login-wordmark::before {
+  position: absolute;
+  bottom: -0.08em;
+  left: 50%;
+  z-index: -1;
+  color: color-mix(in oklch, var(--primary) 8%, transparent);
+  font: inherit;
+  font-size: clamp(3rem, 15vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  content: attr(data-shadow);
+  filter: blur(1.5px);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
 /* Antigravity Spatial & Motion Design Tokens */
 @utility antigravity-float {
   transition:
