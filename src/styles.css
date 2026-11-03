@@ -200,6 +200,8 @@
 }
 
 .login-canvas {
+  position: relative;
+  isolation: isolate;
   background-color: var(--surface);
   background-image:
     radial-gradient(
@@ -226,6 +228,11 @@
       color-mix(in oklch, var(--surface) 94%, var(--action)) 100%
     );
   background-attachment: fixed;
+}
+
+.login-canvas > * {
+  position: relative;
+  z-index: 1;
 }
 
 .login-wordmark {
