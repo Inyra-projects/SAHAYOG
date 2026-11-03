@@ -108,8 +108,8 @@ function DockNav({
           <motion.button
             key={id}
             type="button"
-            layout
             onClick={() => onTabClick(id)}
+            aria-label={label}
             aria-current={isActive ? "page" : undefined}
             whileTap={{ scale: 0.92 }}
             transition={pillSpring}
@@ -135,19 +135,14 @@ function DockNav({
             >
               <Icon className="size-4" strokeWidth={isActive ? 2.25 : 1.75} />
             </motion.span>
-            <AnimatePresence initial={false}>
-              {isActive && (
-                <motion.span
-                  initial={{ opacity: 0, width: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, width: "auto", scale: 1 }}
-                  exit={{ opacity: 0, width: 0, scale: 0.9 }}
-                  transition={labelSpring}
-                  className="relative z-10 overflow-hidden whitespace-nowrap pl-1.5 text-xs font-medium tracking-tight text-action-foreground"
-                >
-                  {label}
-                </motion.span>
-              )}
-            </AnimatePresence>
+            <motion.span
+              aria-hidden
+              animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.96 }}
+              transition={labelSpring}
+              className="pointer-events-none relative z-10 whitespace-nowrap pl-1.5 text-xs font-medium tracking-tight text-action-foreground"
+            >
+              {label}
+            </motion.span>
           </motion.button>
         );
       })}
