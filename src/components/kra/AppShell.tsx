@@ -1,6 +1,17 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { CalendarDays, ClipboardList, LayoutGrid, Loader2, LogOut, Star, Target, Users, X, type LucideIcon } from "lucide-react";
+import {
+  CalendarDays,
+  ClipboardList,
+  LayoutGrid,
+  Loader2,
+  LogOut,
+  Star,
+  Target,
+  Users,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useBootstrap, useSession } from "./session";
 import { Dashboard } from "./Dashboard";
@@ -15,7 +26,13 @@ import { ROLE_LABEL } from "@/lib/scoring";
 import { cn } from "@/lib/utils";
 import { getProfilePhoto } from "@/lib/profilePhotos";
 import { toast } from "sonner";
-import { authenticateLocal, getDefaultRouteForRole, getStoredUser, PRD_USERS, setStoredUser } from "@/lib/auth";
+import {
+  authenticateLocal,
+  getDefaultRouteForRole,
+  getStoredUser,
+  PRD_USERS,
+  setStoredUser,
+} from "@/lib/auth";
 
 export type Tab = "dash" | "team" | "kras" | "evaluations" | "entry" | "rate";
 
@@ -65,9 +82,7 @@ function DockNav({
       aria-label="Primary"
       className={cn(
         "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-slate-200/60 bg-slate-100/70 p-1.5 shadow-[0_20px_48px_-12px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.18)] backdrop-blur-3xl backdrop-saturate-150",
-        compact
-          ? "w-3/4 max-w-xs justify-center gap-1"
-          : "w-[min(92%,24rem)] justify-between",
+        compact ? "w-3/4 max-w-xs justify-center gap-1" : "w-[min(92%,24rem)] justify-between",
       )}
     >
       <div
@@ -100,7 +115,9 @@ function DockNav({
             className={cn(
               "relative z-10 flex cursor-pointer select-none items-center justify-center rounded-full py-4 transition-colors duration-200",
               compact && "flex-1",
-              isActive ? "px-4 text-action-foreground" : "px-3 text-slate-400 hover:bg-slate-100/50 hover:text-slate-700 active:scale-95",
+              isActive
+                ? "px-4 text-action-foreground"
+                : "px-3 text-slate-400 hover:bg-slate-100/50 hover:text-slate-700 active:scale-95",
             )}
           >
             {isActive && (
@@ -179,7 +196,7 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
 
   if (q.isLoading) {
     return (
-      <div className="grid min-h-screen place-items-center">
+      <div className="app-canvas grid min-h-screen place-items-center">
         <Loader2 className="h-6 w-6 animate-spin text-primary" />
       </div>
     );
@@ -187,15 +204,17 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
 
   if (q.error || !q.data) {
     return (
-      <div className="mx-auto grid min-h-screen max-w-md place-items-center px-6 text-center">
+      <div className="app-canvas mx-auto grid min-h-screen max-w-md place-items-center px-6 text-center">
         <div>
           <p className="font-display text-lg font-semibold">Please sign in again</p>
-          <p className="mt-1 text-sm text-muted-foreground">{(q.error as Error)?.message || "Session ended"}</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {(q.error as Error)?.message || "Session ended"}
+          </p>
           <button
             type="button"
             onClick={() => {
               signOut();
-              navigate({ to: "/login" as any }).catch(() => {
+              navigate({ to: "/login" as never }).catch(() => {
                 window.location.href = "/login";
               });
             }}
@@ -278,16 +297,32 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
 
   const handleSignOut = () => {
     signOut();
-    navigate({ to: "/login" as any }).catch(() => {
+    navigate({ to: "/login" as never }).catch(() => {
       window.location.href = "/login";
     });
   };
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-md bg-background pb-36">
+    <div className="app-canvas relative mx-auto min-h-screen max-w-md pb-36">
       {/* Sticky Glassmorphic Header with profile and logout */}
-      <header className="sticky top-0 z-30 border-b border-white/70 bg-white/70 px-4 py-3 backdrop-blur-xl">
-        <div className="flex items-center justify-between gap-3">
+      <header className="sticky top-0 z-30 isolate overflow-hidden border-b border-slate-200/60 bg-slate-100/70 px-4 py-3 shadow-[0_12px_32px_-20px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.18)] backdrop-blur-3xl backdrop-saturate-150">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-white/90 via-slate-100/55 to-slate-200/45"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-8 -top-10 -z-10 h-24 w-36 rounded-full bg-white/80 blur-2xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-12 right-2 -z-10 h-24 w-32 rounded-full bg-sky-100/45 blur-2xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-px -z-10 ring-1 ring-inset ring-white/70"
+        />
+        <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
             <div className="relative">
               <Avatar className="h-10 w-10 rounded-2xl shadow-xs ring-2 ring-white">
@@ -302,13 +337,20 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
                     getAvatarColor(d.me.name),
                   )}
                 >
-                  {d.me.name.replace("Dr. ", "").split(" ").map((x) => x[0]).join("").slice(0, 2)}
+                  {d.me.name
+                    .replace("Dr. ", "")
+                    .split(" ")
+                    .map((x) => x[0])
+                    .join("")
+                    .slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
               <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white" />
             </div>
             <div className="min-w-0">
-              <p className="font-display text-sm font-medium tracking-[-0.03em] text-foreground whitespace-normal leading-snug">{d.me.name}</p>
+              <p className="font-display text-sm font-medium tracking-[-0.03em] text-foreground whitespace-normal leading-snug">
+                {d.me.name}
+              </p>
               <p className="mt-0.5 text-[11px] font-normal leading-relaxed text-slate-500">
                 {role === "admin" ? "Admin" : ROLE_LABEL[role]}
               </p>
@@ -357,10 +399,7 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
             ) : (
               <>
                 {active === "entry" && (
-                  <Evaluations
-                    data={d}
-                    onSwitchToRate={() => setTab("rate")}
-                  />
+                  <Evaluations data={d} onSwitchToRate={() => setTab("rate")} />
                 )}
                 {active === "rate" && <PeerRate data={d} />}
               </>
@@ -375,7 +414,12 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
       >
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/45 to-transparent backdrop-blur-xl backdrop-saturate-150 [mask-image:linear-gradient(to_top,black_0%,black_52%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_top,black_0%,black_52%,transparent_100%)]" />
       </div>
-      <DockNav tabs={tabs} active={active} onTabClick={handleTabClick} reduceMotion={reduceMotion} />
+      <DockNav
+        tabs={tabs}
+        active={active}
+        onTabClick={handleTabClick}
+        reduceMotion={reduceMotion}
+      />
 
       {/* Demo Switcher Bottom Sheet Popup */}
       <Sheet open={switchOpen} onOpenChange={setSwitchOpen}>
@@ -389,7 +433,9 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
 
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <SheetTitle className="text-base font-bold text-foreground">Quick switch demo user</SheetTitle>
+              <SheetTitle className="text-base font-bold text-foreground">
+                Quick switch demo user
+              </SheetTitle>
               <SheetClose className="p-1 rounded-lg opacity-70 hover:opacity-100 transition cursor-pointer border-0 outline-none focus:outline-none text-slate-500 hover:text-foreground">
                 <X className="h-4 w-4" />
                 <span className="sr-only">Close</span>
@@ -417,17 +463,21 @@ export function AppShell({ initialTab }: { initialTab?: string }) {
                           className="object-cover"
                         />
                         <AvatarFallback
-                          className={cn(
-                            "text-xs font-semibold text-white",
-                            getAvatarColor(u.name),
-                          )}
+                          className={cn("text-xs font-semibold text-white", getAvatarColor(u.name))}
                         >
-                          {u.name.replace("Dr. ", "").split(" ").map((x) => x[0]).join("").slice(0, 2)}
+                          {u.name
+                            .replace("Dr. ", "")
+                            .split(" ")
+                            .map((x) => x[0])
+                            .join("")
+                            .slice(0, 2)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
                         <span className="text-sm font-semibold block">{u.name}</span>
-                        <span className="text-[11px] text-muted-foreground">{u.label} · PIN: {u.pin}</span>
+                        <span className="text-[11px] text-muted-foreground">
+                          {u.label} · PIN: {u.pin}
+                        </span>
                       </div>
                     </div>
                     <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">

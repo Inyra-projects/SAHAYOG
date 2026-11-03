@@ -199,9 +199,15 @@
   font-variant-numeric: tabular-nums;
 }
 
-.login-canvas {
+.login-canvas,
+.app-canvas {
   position: relative;
   isolation: isolate;
+}
+
+body,
+.login-canvas,
+.app-canvas {
   background-color: var(--surface);
   background-image:
     radial-gradient(
