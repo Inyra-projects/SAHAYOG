@@ -64,7 +64,7 @@ function DockNav({
     <nav
       aria-label="Primary"
       className={cn(
-        "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/80 bg-white/55 p-2 shadow-[0_20px_48px_-14px_rgba(15,23,42,0.28),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(148,163,184,0.18)] backdrop-blur-3xl backdrop-saturate-150",
+        "fixed bottom-6 left-1/2 z-50 isolate flex -translate-x-1/2 items-center overflow-hidden rounded-full border border-slate-300/80 bg-slate-100/70 p-2 shadow-[0_20px_48px_-12px_rgba(15,23,42,0.34),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(100,116,139,0.24)] ring-1 ring-slate-900/5 backdrop-blur-3xl backdrop-saturate-150",
         compact
           ? "w-3/4 max-w-xs justify-center gap-1"
           : "w-[min(92%,24rem)] justify-between",
@@ -72,7 +72,7 @@ function DockNav({
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-gradient-to-br from-white/85 via-white/35 to-slate-200/20"
+        className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-gradient-to-br from-white/90 via-slate-100/55 to-slate-200/45"
       />
       <div
         aria-hidden
