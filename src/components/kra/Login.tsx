@@ -175,7 +175,7 @@ export function Login() {
       </h1>
       <p className="mt-2 text-center text-sm text-slate-400">Welcome Back</p>
 
-      <div className="mx-auto mt-8 flex w-full max-w-[280px] rounded-full bg-[#F3F4F6] p-1">
+      <div className="mx-auto mt-8 flex w-full max-w-[280px] rounded-full border border-white/70 bg-[#F3F4F6] p-1">
         {(["signin", "create"] as const).map((id) => {
           const active = mode === id;
           return (
