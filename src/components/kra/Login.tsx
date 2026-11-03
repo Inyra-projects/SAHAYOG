@@ -167,7 +167,7 @@ export function Login() {
         className="mb-0 ml-[155px] mr-[155px] mt-8 block h-[70px] w-fit object-contain"
       />
 
-      <h1 className="mt-10 text-center text-[32px] font-bold tracking-tight text-slate-950">
+      <h1 className="mt-8 text-center text-[32px] font-bold tracking-tight text-slate-950">
         SAHAYOG
       </h1>
       <p className="mt-2 text-center text-sm text-slate-400">Welcome Back</p>
