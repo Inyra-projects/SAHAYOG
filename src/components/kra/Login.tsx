@@ -23,7 +23,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { getProfilePhoto } from "@/lib/profilePhotos";
-import brandLogo from "@/imports/logo.png";
+import { SAHAYOG_LOGO_BASE64 } from "@/imports/logoData";
 
 type Mode = "signin" | "create";
 type PinSheetStep = "verify" | "verifying" | "reset";
@@ -163,17 +163,13 @@ export function Login() {
 
   return (
     <div className="login-canvas mx-auto flex min-h-screen max-w-md flex-col px-6 pb-10 pt-14">
-      <img
-        src={brandLogo}
-        alt="Sahayog Pathology"
-        className="w-12 h-12 object-contain mx-auto"
-        onError={(e) => {
-          // Fallback to public root if bundled path fails
-          if (e.currentTarget.src !== "/logo.png") {
-            e.currentTarget.src = "/logo.png";
-          }
-        }}
-      />
+      <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-white/80 flex items-center justify-center p-2 mx-auto mb-3">
+        <img
+          src={SAHAYOG_LOGO_BASE64}
+          alt="Sahayog Pathology Logo"
+          className="w-full h-full object-contain"
+        />
+      </div>
 
       <h1
         data-shadow="SAHAYOG"
