@@ -163,7 +163,7 @@ export function Login() {
 
   return (
     <div className="login-canvas mx-auto flex min-h-screen max-w-md flex-col px-6 pb-10 pt-14">
-      <div className="w-16 h-16 mx-auto mt-8 mb-3 flex items-center justify-center rounded-2xl bg-white/90 shadow-sm border border-white/80 p-2">
+      <div className="w-16 h-16 mx-auto mt-8 mb-3 flex items-center justify-center">
         <img
           src={sahayogLogo}
           alt="Sahayog Pathology"
