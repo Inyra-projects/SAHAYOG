@@ -23,7 +23,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { getProfilePhoto } from "@/lib/profilePhotos";
-import risingUnityStarEmblem from "@/imports/Rising_Unity_Star_Emblem__1_-1.png";
+import risingUnityStarEmblem from "@/imports/Logo.png";
 
 type Mode = "signin" | "create";
 type PinSheetStep = "verify" | "verifying" | "reset";
