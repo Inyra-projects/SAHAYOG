@@ -23,7 +23,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { getProfilePhoto } from "@/lib/profilePhotos";
-import risingUnityStarEmblem from "@/imports/Logo.png";
+import brandLogo from "@/assets/logo.png";
 
 type Mode = "signin" | "create";
 type PinSheetStep = "verify" | "verifying" | "reset";
@@ -164,9 +164,13 @@ export function Login() {
   return (
     <div className="login-canvas mx-auto flex min-h-screen max-w-md flex-col px-6 pb-10 pt-14">
       <img
-        src={risingUnityStarEmblem}
+        src={brandLogo}
         alt="Sahayog Pathology"
-        className="mb-0 ml-[155px] mr-[155px] mt-8 block h-[70px] w-fit object-contain"
+        className="w-12 h-12 object-contain mx-auto"
+        onError={(e) => {
+          // Graceful fallback to avoid showing a broken browser image icon
+          e.currentTarget.style.display = "none";
+        }}
       />
 
       <h1
