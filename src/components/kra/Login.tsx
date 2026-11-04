@@ -23,7 +23,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { getProfilePhoto } from "@/lib/profilePhotos";
-import brandLogo from "@/assets/logo.png";
+import brandLogo from "@/imports/logo.png";
 
 type Mode = "signin" | "create";
 type PinSheetStep = "verify" | "verifying" | "reset";
@@ -168,8 +168,10 @@ export function Login() {
         alt="Sahayog Pathology"
         className="w-12 h-12 object-contain mx-auto"
         onError={(e) => {
-          // Graceful fallback to avoid showing a broken browser image icon
-          e.currentTarget.style.display = "none";
+          // Fallback to public root if bundled path fails
+          if (e.currentTarget.src !== "/logo.png") {
+            e.currentTarget.src = "/logo.png";
+          }
         }}
       />
 
